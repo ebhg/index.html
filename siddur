@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hartman Family Shabbat</title>
+    <style>
+        :root {
+            --primary: #2c3e50; /* Dark Blue */
+            --accent: #d4af37;  /* Gold */
+            --bg: #fdfbf7;      /* Cream */
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --success: #27ae60;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            overflow: hidden; /* Prevent body scroll, handle in main */
+        }
+
+        /* Header */
+        header {
+            padding: 20px 20px 10px 20px;
+            text-align: center;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 5px;
+            transition: opacity 0.3s;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Main Card Area */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+            margin: auto; /* Center vertically if height allows */
+        }
+
+        .card.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Icons & Animation */
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Added specific style for SVG icons to match emoji size */
+        .icon svg, .icon img {
+            height: 1em;
+            width: auto;
+            overflow: visible;
+        }
+
+        .candle-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 5px; /* Changed from 15px to 5px */
+            margin-bottom: 15px;
+        }
+
+        .candle-icon {
+            font-size: 3.5rem;
+            display: block;
+            animation: bounce 2s infinite ease-in-out;
+        }
+        
+        .delay {
+            animation-delay: 1s; /* Offset animation for second candle */
+        }
+
+        .single-bounce {
+             animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); } /* Changed from -8px to -3px for subtlety */
+        }
+
+        h2 {
+            color: var(--accent);
+            margin: 0 0 15px 0;
+            font-size: 1.6rem;
+        }
+
+        .instruction {
+            font-size: 0.95rem;
+            color: var(--text);
+            background: #f4f4f4;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: inline-block;
+            line-height: 1.4;
+            border-left: 4px solid var(--primary);
+            width: 100%;
+        }
+
+        /* Prayer Text Styling */
+        .hebrew {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: var(--primary);
+            margin-bottom: 15px;
+            direction: rtl;
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        .transliteration {
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        .english {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 10px;
+            padding: 0 10px;
+            line-height: 1.4;
+        }
+
+        /* Footer Controls */
+        footer {
+            padding: 20px;
+            background: var(--card-bg);
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        button {
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            touch-action: manipulation;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-start {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-back {
+            background-color: #f0f0f0;
+            color: var(--text);
+            flex: 0.4;
+        }
+
+        .btn-next {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-finish {
+            background-color: var(--success);
+            color: white;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Celebration Text */
+        .celebration {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Hartman Family Shabbat</h1>
+        <div class="progress-container">
+            <div class="dot" id="dot1"></div>
+            <div class="dot" id="dot2"></div>
+            <div class="dot" id="dot3"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- WELCOME SCREEN (Step 0) -->
+        <div class="card active" id="welcome">
+            <span class="icon single-bounce">🏠</span>
+            <h2>Shabbat Shalom</h2>
+            <p style="color: var(--text-light); margin-bottom: 20px;">Welcome to the Hartman Family Shabbat Dinner Guide.</p>
+            <div class="instruction" style="background: var(--bg); border: none;">
+                Follow the blessings for Candles, Wine, and Bread to begin your meal.
+            </div>
+            <button class="btn-start" onclick="startApp()">Begin Dinner</button>
+        </div>
+
+        <!-- STEP 1: CANDLES -->
+        <div class="card" id="step1">
+            <div class="candle-wrapper">
+                <span class="candle-icon">🕯️</span>
+                <span class="candle-icon delay">🕯️</span>
+            </div>
+            <h2>Candles</h2>
+            <div class="instruction">Light the candles, cover your eyes, and recite.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת.</div>
+            
+            <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, asher kid’shanu b’mitzvotav v’tzivanu l’hadlik ner shel Shabbat.</div>
+            
+            <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Who sanctified us with His commandments and commanded us to light the Shabbat candles.</div>
+        </div>
+
+        <!-- STEP 2: WINE -->
+        <div class="card" id="step2">
+            <span class="icon single-bounce">🍷</span>
+            <h2>Kiddush</h2>
+            <div class="instruction">Raise the cup of wine or grape juice.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.</div>
+            
+            <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, borei p’ri hagafen.</div>
+            
+            <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Creator of the fruit of the vine.</div>
+        </div>
+
+        <!-- STEP 3: BREAD -->
+        <div class="card" id="step3">
+            <span class="icon single-bounce">
+                <!-- Custom SVG for Two Braided Challahs with Seeds -->
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="challahGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f4d79b;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#d4af37;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#b5901e;stop-opacity:1" />
+                        </linearGradient>
+                        <radialGradient id="seedGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" style="stop-color:#f0e68c;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#e0d67c;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    <!-- Challah 1 (Left) -->
+                    <g transform="translate(5, 10)">
+                        <!-- Braid Strands -->
+                        <path d="M10 15 C 10 5, 25 0, 35 5 C 45 10, 50 20, 45 30 C 40 40, 25 45, 15 40 C 5 35, 0 25, 10 15 Z" fill="url(#challahGradient)" stroke="#b5901e" stroke-width="0.5"/>
+                        <path d="M20 10 C 25 0, 40 5, 45 15 C 50 25, 45 35, 35 40 C 25 45, 10 40, 5 30 C 0 20, 10 15, 20 10 Z" fill="url(#challahGradient)" stroke="#b5901e" stroke-width="0.5"/>
+                        
+                        <!-- Seeds -->
+                        <ellipse cx="15" cy="15" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(20 15 15)" />
+                        <ellipse cx="25" cy="10" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-10 25 10)" />
+                        <ellipse cx="35" cy="18" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(30 35 18)" />
+                        <ellipse cx="40" cy="28" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-20 40 28)" />
+                        <ellipse cx="30" cy="35" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(10 30 35)" />
+                        <ellipse cx="18" cy="32" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-30 18 32)" />
+                        <ellipse cx="10" cy="25" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(15 10 25)" />
+                    </g>
+                    <!-- Challah 2 (Right) -->
+                    <g transform="translate(45, 10)">
+                        <!-- Braid Strands -->
+                        <path d="M10 15 C 10 5, 25 0, 35 5 C 45 10, 50 20, 45 30 C 40 40, 25 45, 15 40 C 5 35, 0 25, 10 15 Z" fill="url(#challahGradient)" stroke="#b5901e" stroke-width="0.5"/>
+                        <path d="M20 10 C 25 0, 40 5, 45 15 C 50 25, 45 35, 35 40 C 25 45, 10 40, 5 30 C 0 20, 10 15, 20 10 Z" fill="url(#challahGradient)" stroke="#b5901e" stroke-width="0.5"/>
+                        
+                        <!-- Seeds -->
+                        <ellipse cx="15" cy="15" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(20 15 15)" />
+                        <ellipse cx="25" cy="10" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-10 25 10)" />
+                        <ellipse cx="35" cy="18" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(30 35 18)" />
+                        <ellipse cx="40" cy="28" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-20 40 28)" />
+                        <ellipse cx="30" cy="35" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(10 30 35)" />
+                        <ellipse cx="18" cy="32" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(-30 18 32)" />
+                        <ellipse cx="10" cy="25" rx="1" ry="1.5" fill="url(#seedGradient)" transform="rotate(15 10 25)" />
+                    </g>
+                </svg>
+            </span>
+            <h2>Bread</h2>
+            <div class="instruction">Uncover the Challah, salt it, and recite.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ.</div>
+            
+            <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, hamotzi lechem min ha’aretz.</div>
+            
+            <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Who brings forth bread from the earth.</div>
+            
+            <div id="final-message" class="celebration hidden">Shabbat Shalom!</div>
+        </div>
+    </main>
+
+    <footer class="hidden">
+        <button class="btn-back hidden" id="btnBack" onclick="changeStep(-1)">Back</button>
+        <button class="btn-next" id="btnNext" onclick="handleNextClick()">Next: Wine</button>
+    </footer>
+
+    <script>
+        let currentStep = 0; // 0 = Welcome
+        const totalSteps = 3;
+
+        const btnBack = document.getElementById('btnBack');
+        const btnNext = document.getElementById('btnNext');
+        const finalMessage = document.getElementById('final-message');
+        const footer = document.querySelector('footer');
+        const progressContainer = document.querySelector('.progress-container');
+
+        // Initial UI Setup
+        updateUI();
+
+        function startApp() {
+            currentStep = 1;
+            updateUI();
+        }
+
+        function handleNextClick() {
+            if (currentStep < totalSteps) {
+                changeStep(1);
+            } else {
+                // Restart logic - go back to Welcome
+                restartApp();
+            }
+        }
+
+        function changeStep(direction) {
+            const newStep = currentStep + direction;
+
+            if (newStep >= 0 && newStep <= totalSteps) { // Changed to allow 0 (Welcome)
+                // Remove active class from current step
+                if (currentStep > 0) {
+                     document.getElementById(`step${currentStep}`).classList.remove('active');
+                }
+                
+                // Update current step index
+                currentStep = newStep;
+                
+                // Add active class to new step if not 0 (0 is handled in updateUI)
+                if (currentStep > 0) {
+                    document.getElementById(`step${currentStep}`).classList.add('active');
+                }
+                
+                updateUI();
+            }
+        }
+
+        function restartApp() {
+            // Hide current step (likely step 3)
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Reset to 0 (Welcome)
+            currentStep = 0;
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            // Handle Welcome Screen (Step 0)
+            if (currentStep === 0) {
+                document.getElementById('welcome').classList.add('active');
+                progressContainer.classList.add('hidden');
+                footer.classList.add('hidden');
+                
+                // Ensure other steps are hidden (cleanup if returning from end)
+                for(let i=1; i<=totalSteps; i++) {
+                     document.getElementById(`step${i}`).classList.remove('active');
+                }
+                return;
+            } else {
+                document.getElementById('welcome').classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                progressContainer.classList.remove('hidden');
+                footer.classList.remove('hidden');
+            }
+
+            // Update Dots
+            for (let i = 1; i <= totalSteps; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (i === currentStep) {
+                    dot.classList.add('active');
+                    dot.style.backgroundColor = 'var(--accent)';
+                } else {
+                    dot.classList.remove('active');
+                    dot.style.backgroundColor = '#ddd';
+                }
+            }
+
+            // Update Buttons based on Step
+            if (currentStep === 1) {
+                btnBack.classList.remove('hidden'); // Show button
+                btnBack.innerText = "Home";         // Label as Home
+                btnNext.innerText = "Next: Wine";
+                btnNext.classList.remove('btn-finish');
+                finalMessage.classList.add('hidden');
+            } 
+            else if (currentStep === 2) {
+                btnBack.classList.remove('hidden');
+                btnBack.innerText = "Back";         // Reset label
+                btnNext.innerText = "Next: Bread";
+                btnNext.classList.remove('btn-finish');
+                finalMessage.classList.add('hidden');
+            } 
+            else if (currentStep === 3) {
+                btnBack.classList.remove('hidden');
+                btnBack.innerText = "Back";         // Reset label
+                btnNext.innerText = "Start Over";
+                btnNext.classList.add('btn-finish');
+                finalMessage.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
