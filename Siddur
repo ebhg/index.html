@@ -168,32 +168,40 @@
         }
 
         /* Prayer Text Styling */
-        .hebrew {
-            font-family: 'Times New Roman', serif;
-            font-size: 1.8rem;
-            line-height: 1.4;
-            color: var(--primary);
-            margin-bottom: 15px;
-            direction: rtl;
-            font-weight: bold;
-            padding: 0 5px;
-        }
-
+        /* Updated hierarchy: Transliteration > English > Hebrew */
+        
         .transliteration {
-            font-style: italic;
-            color: var(--text);
-            margin-bottom: 15px;
-            font-size: 1rem;
+            font-size: 1.3rem; /* Larger for readability */
+            font-weight: 600;  /* Bolder */
+            color: var(--primary);
+            font-style: normal; /* Removed italics for clarity */
+            margin-bottom: 8px;
             line-height: 1.5;
             padding: 0 10px;
         }
 
         .english {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-light);
-            margin-top: 10px;
+            font-style: italic; /* Added italics here for differentiation */
+            margin-bottom: 20px;
             padding: 0 10px;
             line-height: 1.4;
+        }
+
+        .hebrew {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem; /* Slightly smaller than before */
+            line-height: 1.4;
+            color: var(--text-light);   /* Darker, secondary color */
+            margin-top: 15px;
+            margin-bottom: 0;
+            direction: rtl;
+            font-weight: normal;
+            padding: 10px;
+            background-color: #f9f9f9; /* Light background for box */
+            border: 1px solid #e0e0e0; /* Subtle border */
+            border-radius: 8px; /* Rounded corners */
         }
 
         /* Footer Controls */
@@ -260,6 +268,26 @@
             font-size: 1.2rem;
             margin-top: 20px;
         }
+
+        /* Text Block Style for Step 1 */
+        .text-block {
+            color: var(--text-light); 
+            font-size: 0.95em; 
+            margin-bottom: 20px; 
+            line-height: 1.6;
+            text-align: left;
+            padding: 0 10px;
+        }
+        
+        .question-list li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .question-list li:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -270,6 +298,8 @@
             <div class="dot" id="dot1"></div>
             <div class="dot" id="dot2"></div>
             <div class="dot" id="dot3"></div>
+            <div class="dot" id="dot4"></div>
+            <div class="dot" id="dot5"></div>
         </div>
     </header>
 
@@ -278,44 +308,66 @@
         <div class="card active" id="welcome">
             <span class="icon single-bounce">🏠</span>
             <h2>Shabbat Shalom</h2>
-            <p style="color: var(--text-light); margin-bottom: 20px;">Welcome to the Hartman Family Shabbat Dinner Guide.</p>
+            <p style="color: var(--text-light); margin-bottom: 10px;">Welcome to the Hartman Family Shabbat Dinner.</p>
+            <p style="color: var(--text-light); font-size: 0.95em; margin-bottom: 20px; line-height: 1.5;">
+                This Siddur (prayer book, literally "order") will guide us through a brief service to welcome The Sabbath.
+            </p>
             <div class="instruction" style="background: var(--bg); border: none;">
-                Follow the blessings for Candles, Wine, and Bread to begin your meal.
+                Thank you for making this day special.
             </div>
-            <button class="btn-start" onclick="startApp()">Begin Dinner</button>
+            <button class="btn-start" onclick="startApp()">Get Started</button>
         </div>
 
-        <!-- STEP 1: CANDLES -->
+        <!-- STEP 1: WHAT IS SHABBAT (NEW) -->
         <div class="card" id="step1">
+            <span class="icon single-bounce">📖</span>
+            <h2>What is Shabbat?</h2>
+            
+            <div class="text-block">
+                <p>Shabbat is a sanctuary in time—a dedicated moment to disconnect from the busy week and reconnect with family, friends, and spirit.</p>
+                
+                <p style="font-weight: bold; margin-top: 15px; color: var(--accent);">The Three Pillars:</p>
+                <ul style="text-align: left; padding-left: 20px; margin: 10px 0;">
+                    <li style="margin-bottom: 8px;"><strong>Rest (Menuchah):</strong> We pause from the endless cycle of creating and doing to find true physical and spiritual tranquility.</li>
+                    <li style="margin-bottom: 8px;"><strong>Holiness (Kedushah):</strong> We set this day apart from the ordinary, elevating the mundane into something sacred.</li>
+                    <li style="margin-bottom: 8px;"><strong>Joy (Oneg):</strong> We delight in the day through good food, relaxation, and the company of loved ones.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- STEP 2: CANDLES (Previously Step 1) -->
+        <div class="card" id="step2">
             <div class="candle-wrapper">
                 <span class="candle-icon">🕯️</span>
                 <span class="candle-icon delay">🕯️</span>
             </div>
             <h2>Candles</h2>
-            <div class="instruction">Light the candles, cover your eyes, and recite.</div>
+            <div class="instruction">Light the candles and then recite.</div>
             
-            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת.</div>
-            
+            <!-- Reordered Text: Transliteration -> English -> Hebrew -->
             <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, asher kid’shanu b’mitzvotav v’tzivanu l’hadlik ner shel Shabbat.</div>
             
-            <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Who sanctified us with His commandments and commanded us to light the Shabbat candles.</div>
+            <div class="english">Blessed are You, Eternal our God, Sovereign of Time and Space, Who commands us to kindle the light that sets Shabbat apart.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל שַׁבָּת.</div>
         </div>
 
-        <!-- STEP 2: WINE -->
-        <div class="card" id="step2">
+        <!-- STEP 3: WINE (Previously Step 2) -->
+        <div class="card" id="step3">
             <span class="icon single-bounce">🍷</span>
             <h2>Kiddush</h2>
             <div class="instruction">Raise the cup of wine or grape juice.</div>
             
-            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.</div>
-            
+            <!-- Reordered Text: Transliteration -> English -> Hebrew -->
             <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, borei p’ri hagafen.</div>
             
-            <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Creator of the fruit of the vine.</div>
+            <div class="english">Blessed are You, Eternal our God, Sovereign of Time and Space, Creator of the fruit of the vine.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.</div>
         </div>
 
-        <!-- STEP 3: BREAD -->
-        <div class="card" id="step3">
+        <!-- STEP 4: BREAD (Previously Step 3) -->
+        <div class="card" id="step4">
             <span class="icon single-bounce">
                 <!-- Custom SVG for Two Braided Challahs with Seeds -->
                 <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
@@ -363,13 +415,30 @@
                 </svg>
             </span>
             <h2>Bread</h2>
-            <div class="instruction">Uncover the Challah, salt it, and recite.</div>
+            <div class="instruction">Uncover the Challah and recite.</div>
             
-            <div class="hebrew">בָּרוּךְ אַתָּה ה' אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ.</div>
-            
+            <!-- Reordered Text: Transliteration -> English -> Hebrew -->
             <div class="transliteration">Baruch Atah Adonai Eloheinu Melech ha’olam, hamotzi lechem min ha’aretz.</div>
             
             <div class="english">Blessed are You, Adonai our God, Sovereign of the universe, Who brings forth bread from the earth.</div>
+            
+            <div class="hebrew">בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ.</div>
+        </div>
+
+        <!-- STEP 5: DISCUSSION (New) -->
+        <div class="card" id="step5">
+            <span class="icon single-bounce">💬</span>
+            <h2>Table Talk</h2>
+            <div class="instruction">Meaningful questions to share over dinner.</div>
+            
+            <div class="text-block">
+                <ul class="question-list" style="text-align: left; padding-left: 20px; margin: 10px 0;">
+                    <li><strong>Gratitude:</strong> What is one thing that brought you joy this week?</li>
+                    <li><strong>Reflection:</strong> What was a challenge you faced, and what did you learn?</li>
+                    <li><strong>Connection:</strong> How can we support each other in the coming week?</li>
+                    <li><strong>Intention:</strong> Which Shabbat pillar (Rest, Holiness, Joy) do you need most right now?</li>
+                </ul>
+            </div>
             
             <div id="final-message" class="celebration hidden">Shabbat Shalom!</div>
         </div>
@@ -382,7 +451,7 @@
 
     <script>
         let currentStep = 0; // 0 = Welcome
-        const totalSteps = 3;
+        const totalSteps = 5; // Increased to 5
 
         const btnBack = document.getElementById('btnBack');
         const btnNext = document.getElementById('btnNext');
@@ -410,16 +479,13 @@
         function changeStep(direction) {
             const newStep = currentStep + direction;
 
-            if (newStep >= 0 && newStep <= totalSteps) { // Changed to allow 0 (Welcome)
-                // Remove active class from current step
+            if (newStep >= 0 && newStep <= totalSteps) { 
                 if (currentStep > 0) {
                      document.getElementById(`step${currentStep}`).classList.remove('active');
                 }
                 
-                // Update current step index
                 currentStep = newStep;
                 
-                // Add active class to new step if not 0 (0 is handled in updateUI)
                 if (currentStep > 0) {
                     document.getElementById(`step${currentStep}`).classList.add('active');
                 }
@@ -429,12 +495,9 @@
         }
 
         function restartApp() {
-            // Hide current step (likely step 3)
+            // Hide current step (Step 5)
             document.getElementById(`step${currentStep}`).classList.remove('active');
-            
-            // Reset to 0 (Welcome)
             currentStep = 0;
-            
             updateUI();
         }
 
@@ -445,9 +508,10 @@
                 progressContainer.classList.add('hidden');
                 footer.classList.add('hidden');
                 
-                // Ensure other steps are hidden (cleanup if returning from end)
+                // Ensure other steps are hidden
                 for(let i=1; i<=totalSteps; i++) {
-                     document.getElementById(`step${i}`).classList.remove('active');
+                     const step = document.getElementById(`step${i}`);
+                     if(step) step.classList.remove('active');
                 }
                 return;
             } else {
@@ -470,23 +534,37 @@
             }
 
             // Update Buttons based on Step
-            if (currentStep === 1) {
-                btnBack.classList.remove('hidden'); // Show button
-                btnBack.innerText = "Home";         // Label as Home
-                btnNext.innerText = "Next: Wine";
+            if (currentStep === 1) { // New Step: What is Shabbat?
+                btnBack.classList.remove('hidden');
+                btnBack.innerText = "Home";
+                btnNext.innerText = "Next: Candles";
+                btnNext.classList.remove('btn-finish');
+                finalMessage.classList.add('hidden');
+            }
+            else if (currentStep === 2) { // Candles
+                btnBack.classList.remove('hidden');
+                btnBack.innerText = "Back";
+                btnNext.innerText = 'Next: "Wine"'; 
                 btnNext.classList.remove('btn-finish');
                 finalMessage.classList.add('hidden');
             } 
-            else if (currentStep === 2) {
+            else if (currentStep === 3) { // Wine
                 btnBack.classList.remove('hidden');
-                btnBack.innerText = "Back";         // Reset label
+                btnBack.innerText = "Back";
                 btnNext.innerText = "Next: Bread";
                 btnNext.classList.remove('btn-finish');
                 finalMessage.classList.add('hidden');
             } 
-            else if (currentStep === 3) {
+            else if (currentStep === 4) { // Bread
                 btnBack.classList.remove('hidden');
-                btnBack.innerText = "Back";         // Reset label
+                btnBack.innerText = "Back";
+                btnNext.innerText = "Next: Discussion";
+                btnNext.classList.remove('btn-finish');
+                finalMessage.classList.add('hidden');
+            }
+            else if (currentStep === 5) { // Discussion (Final)
+                btnBack.classList.remove('hidden');
+                btnBack.innerText = "Back";
                 btnNext.innerText = "Start Over";
                 btnNext.classList.add('btn-finish');
                 finalMessage.classList.remove('hidden');
