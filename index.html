@@ -48,7 +48,7 @@
 
         h1 {
             margin: 0 0 10px 0;
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Increased size */
             color: var(--primary);
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -157,11 +157,11 @@
         h2 {
             color: var(--accent);
             margin: 0 0 15px 0;
-            font-size: 1.6rem;
+            font-size: 2rem; /* Increased size */
         }
 
         .instruction {
-            font-size: 0.95rem;
+            font-size: 1.15rem; /* Increased size */
             color: var(--text);
             background: #f4f4f4;
             padding: 12px 16px;
@@ -176,7 +176,7 @@
         /* Prayer Text Styling */
         
         .transliteration {
-            font-size: 1.3rem;
+            font-size: 1.5rem; /* Increased size */
             font-weight: 600;
             color: var(--primary);
             font-style: normal;
@@ -186,19 +186,36 @@
         }
 
         .english {
-            font-size: 1rem;
+            font-size: 1.2rem; /* Increased size */
             color: var(--text-light);
             font-style: italic;
             margin-bottom: 20px;
             padding: 0 10px;
-            border: 1px solid #e0e0e0; /* Subtle border */
-            border-radius: 8px; /* Rounded corners */
+            /* Removed border and border-radius */
+        }
+
+        .hebrew {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.6rem; /* Increased size */
+            line-height: 1.4;
+            color: var(--text-light);
+            margin-top: 15px;
+            margin-bottom: 0;
+            direction: rtl;
+            font-weight: normal;
+            padding: 5px 15px; /* Adjusted to match pill style */
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px; /* Matched radius */
+            display: table; /* Shrink-wrap behavior like the list items */
+            margin-left: auto; /* Center the table element */
+            margin-right: auto; /* Center the table element */
         }
 
         /* New style for Hebrew inside list items */
         .hebrew-list-item {
             font-family: 'Times New Roman', serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem; /* Increased size */
             color: var(--text-light);
             background-color: #f9f9f9;
             border: 1px solid #e0e0e0;
@@ -223,7 +240,7 @@
             border: none;
             padding: 18px;
             border-radius: 14px;
-            font-size: 1rem;
+            font-size: 1.2rem; /* Increased size */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -269,14 +286,14 @@
         .celebration {
             color: var(--success);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Increased size */
             margin-top: 20px;
         }
 
         /* Text Block Style for Step 1 */
         .text-block {
             color: var(--text-light); 
-            font-size: 0.95em; 
+            font-size: 1.1rem; /* Increased size */
             margin-bottom: 20px; 
             line-height: 1.6;
             text-align: left;
@@ -313,7 +330,7 @@
             <span class="icon single-bounce">🏠</span>
             <h2>Shabbat Shalom</h2>
             <p style="color: var(--text-light); margin-bottom: 10px;">Welcome to the Hartman Family Shabbat Dinner.</p>
-            <p style="color: var(--text-light); font-size: 0.95em; margin-bottom: 20px; line-height: 1.5;">
+            <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5;">
                 This Siddur (prayer book, literally "order") will guide us through a brief service to welcome The Sabbath.
             </p>
             <div class="instruction" style="background: var(--bg); border: none;">
